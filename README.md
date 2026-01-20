@@ -42,7 +42,7 @@ Find the latest release of OptimizerNXT on the [Releases](https://github.com/hel
 
 ---
 
-## 📥 Changelog
+## 📜 Changelog
 
 Stay updated with the latest changes through the [Changelog](https://github.com/hellzerg/optimizerNXT/blob/main/CHANGELOG.md).
 
@@ -72,7 +72,7 @@ optimizerNXT.exe apply "<yaml_folder>"
 
 ---
 
-## 🏢 Hub for YAML Packages
+## 📁 Hub for YAML Packages
 
 OptimizerNXT will feature a **centralized Hub** for hosting curated YAML packages for various automation tasks, including:  
 
@@ -83,6 +83,10 @@ OptimizerNXT will feature a **centralized Hub** for hosting curated YAML package
 - Network configuration  
 
 All YAML packages in the Hub will be **cryptographically signed**, ensuring authenticity and safety for execution.  
+
+> Contributors can create a Pull Request (PR) with new YAML packages to have them reviewed, integrated into the Hub, and cryptographically signed.
+
+🔗 **Access the Hub:** [OptimizerNXT YAML Hub](https://github.com/hellzerg/optimizerNXT/blob/main/HUB.md)
 
 ---
 
@@ -105,7 +109,7 @@ Learn about our security measures in the [Security Policy](https://github.com/he
 
 ---
 
-## 📊 Details
+## 📅 Details
 
 - Latest version: v1.0.0
 - Released: 2026-Jan-26
