@@ -10,9 +10,9 @@ namespace optimizerNXT {
         internal const string CurrentVersion = "1.0.0";
         internal static string LatestVersion = string.Empty;
         internal static Mutex Mutex;
-        internal const string GitHubProjectUrl = "https://github.com/hellzerg/optimizer-nxt";
+        internal const string GitHubProjectUrl = "https://github.com/hellzerg/optimizerNXT";
         internal const string DonateUrl = "https://www.paypal.com/paypalme/supportoptimizer";
-        internal const string GithubVersionUrl = "https://raw.githubusercontent.com/hellzerg/optimizernxt/refs/heads/main/version.txt";
+        internal const string GithubVersionUrl = "https://raw.githubusercontent.com/hellzerg/optimizerNXT/refs/heads/main/version.txt";
 
         const string MUTEX_GUID = @"{DEADMOON-0EFC7B8A-D1FC-467F-0117C643FE19-OPTIMIZER-NXT}";
         static bool _cliNotRunning;
