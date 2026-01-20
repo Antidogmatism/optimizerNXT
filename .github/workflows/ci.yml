@@ -6,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: windows-2025
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v6
@@ -31,7 +33,7 @@ jobs:
           /p:DebugType=none
           /m
 
-      - name: Create Release with Tag
+      - name: Create release with tag
         uses: ncipollo/release-action@v1
         with:
           tag: v0.0.0
