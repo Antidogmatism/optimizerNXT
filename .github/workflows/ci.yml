@@ -31,7 +31,7 @@ jobs:
           /m
 
       - name: Create release description
-        run: >
+        run: |
           $sha256 = Get-FileHash "./optimizerNXT/bin/Release/optimizerNXT.exe" -Algorithm SHA256
           $bodyPath = "./release-body.md"
           "SHA256: $($sha256.Hash)" | Out-File -Encoding UTF8 $bodyPath
