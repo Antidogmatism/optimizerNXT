@@ -109,13 +109,6 @@ Learn about our security measures in the [Security Policy](https://github.com/he
 
 ---
 
-## 📅 Details
-
-- Latest version: v1.0.0
-- Released: 2026-Jan-26
-
----
-
 ## ❤️ Buy me a delicious espresso ☕
 
 If you find this tool useful, consider showing your support by [donating through PayPal](https://www.paypal.com/paypalme/supportoptimizer).
