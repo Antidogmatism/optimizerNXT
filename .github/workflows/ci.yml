@@ -41,7 +41,8 @@ jobs:
 
           $releaseBody = @"
           SHA256: $($sha256.Hash)
-          View changelog ➡ $changelogUrl
+          
+          [View changelog ➡]($changelogUrl)
           "@
 
           $releaseBody | Out-File -Encoding UTF8 $bodyPath
