@@ -45,6 +45,5 @@ jobs:
           name: OptimizerNXT ${{ github.ref_name }}
           allowUpdates: true
           replacesArtifacts: true
-          generateReleaseNotes: true
           bodyFile: "./release-body.md" 
           artifacts: "./optimizerNXT/bin/Release/optimizerNXT.exe"
