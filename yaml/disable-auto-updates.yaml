@@ -1,0 +1,69 @@
+jobs:
+  - name: "Configure Windows Update, Delivery Optimization, and store updates to manual"
+    description: "Adjust Windows Update behavior, delivery optimization, and store updates"
+    condition:
+      windows: [10, 11]
+    steps:
+      - name: "Disable Insider service"
+        service:
+         stop:
+         - wisvc
+         disable:
+         - wisvc
+
+      - name: "Windows Update and Delivery Optimization registry settings"
+        registry:
+          entries:
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\WindowsUpdate\UX\Settings
+              add:
+                UxOption: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU
+              add:
+                NoAutoUpdate: { type: DWord, value: 0 }
+                AUOptions: { type: DWord, value: 2 }
+                NoAutoRebootWithLoggedOnUsers: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config
+              add:
+                DODownloadMode: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Speech
+              add:
+                AllowSpeechModelUpdate: { type: DWord, value: 0 }
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization
+              add:
+                SystemSettingsDownloadMode: { type: DWord, value: 3 }
+            - hive: HKLM
+              path: Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization
+              add:
+                SystemSettingsDownloadMode: { type: DWord, value: 3 }
+
+      - name: "Disable Store auto updates"
+        registry:
+          entries:
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+              add:
+                SilentInstalledAppsEnabled: { type: DWord, value: 0 }
+                PreInstalledAppsEnabled: { type: DWord, value: 0 }
+                OemPreInstalledAppsEnabled: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+              add:
+                SilentInstalledAppsEnabled: { type: DWord, value: 0 }
+                PreInstalledAppsEnabled: { type: DWord, value: 0 }
+                OemPreInstalledAppsEnabled: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\CloudContent
+              add:
+                DisableSoftLanding: { type: DWord, value: 1 }
+                DisableWindowsConsumerFeatures: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\WindowsStore
+              add:
+                AutoDownload: { type: DWord, value: 2 }
+
+            

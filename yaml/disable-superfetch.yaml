@@ -1,0 +1,22 @@
+jobs:
+  - name: "Disable superfetch"
+    description: "Disables superfetch and SysMain config"
+    steps:
+
+    - name: "Disable Superfetch"
+      service:
+        stop:
+          - SysMain
+        disable:
+          - SysMain
+
+    - name: "Disable Prefetch / Superfetch Parameters"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters
+            add:
+              EnableSuperfetch: { type: DWord, value: 0 }
+              EnablePrefetcher: { type: DWord, value: 0 }
+              SfTracingState: { type: DWord, value: 1 }
+

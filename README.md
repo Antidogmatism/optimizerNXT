@@ -1,2 +1,95 @@
-# optimizerNXT
-The finest Windows Optimizer CLI
+## ⚡ OptimizerNXT
+
+### The finest Windows Optimizer CLI
+
+OptimizerNXT is a **powerful, YAML-driven CLI tool** for automating Windows tweaks, managing system services, controlling processes, and optimizing workflows—all from the command line.  
+
+<img src="https://raw.githubusercontent.com/hellzerg/optimizer-nxt/refs/heads/main/images/banner.svg">
+
+---
+
+## 🌟 Summary
+
+OptimizerNXT empowers system administrators, IT professionals, and power users to automate **Windows tweaks, network configuration, startup management, service control, process monitoring, and script execution**, all using **secure, YAML-based configurations**.  
+
+> “Automate. Secure. Optimize. Next-level.”
+
+---
+
+## 🚀 Key Features
+
+| Icon | Feature | Description |
+|------|--------|-------------|
+| 🗄️ | **Registry Management** | Add, update, or delete registry keys and values efficiently. |
+| 🌐 | **DNS Control** | Switch between multiple DNS configurations quickly. |
+| ⚡ | **Startup & Hosts Editing** | Modify startup programs and hosts file safely. |
+| 🧹 | **UWP App Removal** | Batch uninstall unwanted Windows apps. |
+| 🔒 | **Process Control** | Block, terminate, or allow processes with advanced conditions. |
+| 🛠️ | **Service Management** | Start, stop, disable, enable, or set demand-start services. |
+| 🖥️ | **Shell Execution** | Run CMD, PowerShell, or REG scripts inline or from files. |
+| 📄 | **Conditional Operations** | Apply tweaks based on system state, user, or environment. |
+| 🔐 | **Signed YAML Enforcement** | Only executes YAML files signed with trusted certificate. |
+
+---
+
+## 📥 Downloads
+
+> Downloads will be available soon.  
+
+---
+
+## 📚 Documentation
+
+**YAML Syntax** – *coming soon*  
+
+OptimizerNXT uses **YAML-driven configurations** with support for:  
+
+- Multiple operations per YAML  
+- Conditional execution based on environment or system state  
+- Sequenced tasks with dependencies  
+- Only YAML files **signed with the repo's PFX certificate** are executed. Unsigned or tampered files will be rejected.  
+
+---
+
+## 🏢 Hub for YAML Packages
+
+OptimizerNXT will feature a **centralized Hub** for hosting curated YAML packages for various automation tasks, including:  
+
+- Performance optimization  
+- Privacy & security tweaks  
+- System cleanup  
+- Application management  
+- Network configuration  
+
+All YAML packages in the Hub will be **cryptographically signed**, ensuring authenticity and safety for execution.  
+
+---
+
+## 🔒 Security Policy
+
+- OptimizerNXT executes **locally only** and does **not collect user data**.  
+- All YAML configurations must be signed with repo's trusted **PFX certificate**.  
+- Unsigned or invalid YAML files are automatically rejected.  
+- Users are encouraged to test YAML packages in isolated environments first.  
+
+---
+
+## 💻 Compatibility
+
+- Requires .NET Framework 4.8
+- Compatible with Windows 7, 8, 8.1, 10, 11
+- Also compatible with all Windows Server editions starting from 2008
+
+---
+
+## 📊 Details
+
+- Latest version: soon
+- Released: soon
+- SHA256: hash
+
+---
+
+## ☕ Buy me a delicious espresso
+
+If you find this tool useful, consider showing your support by [donating through PayPal](https://www.paypal.com/paypalme/supportoptimizer).

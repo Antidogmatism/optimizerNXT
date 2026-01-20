@@ -1,0 +1,151 @@
+jobs:
+- name: "Simplify Windows 10 and 10"
+  description: "Disable Searchbox enhancements, taskbar feeds, and Windows News & Interests"
+  condition:
+    windows: [10, 11]
+  steps:
+    - name: "Remove Cast to Device option"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked
+            add:
+              "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}": { type: String, value: "Play to Menu" }
+
+    - name: "Disable Cloud clipboard"
+      registry:
+        entries:
+          # System policies
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\System
+            add:
+              AllowClipboardHistory: { type: DWord, value: 0 }
+              AllowCrossDeviceClipboard: { type: DWord, value: 0 }
+
+          # User and machine clipboard settings
+          - hive: HKCU
+            path: Software\Microsoft\Clipboard
+            add:
+              EnableClipboardHistory: { type: DWord, value: 0 }
+
+          - hive: HKLM
+            path: Software\Microsoft\Clipboard
+            add:
+              EnableClipboardHistory: { type: DWord, value: 0 }
+
+    - name: "Explorer People Band registry setting"
+      registry:
+        entries:
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People
+            add:
+              PeopleBand: { type: DWord, value: 0 }
+
+    - name: "Explorer registry settings"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+            add:
+              ShowTaskViewButton: { type: DWord, value: 0 }
+              ShowSyncProviderNotifications: { type: DWord, value: 0 }
+              LaunchTo: { type: DWord, value: 1 }
+
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager
+            add:
+              EnthusiastMode: { type: DWord, value: 1 }
+
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Explorer
+            add:
+              ShowFrequent: { type: DWord, value: 0 }
+              ShowRecent: { type: DWord, value: 0 }
+
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\FileHistory
+            add:
+              Disabled: { type: DWord, value: 1 }
+
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\File History
+            add:
+              Disabled: { type: DWord, value: 1 }
+
+    - name: "Search and Feeds registry settings"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Search
+            add:
+              SearchboxTaskbarMode: { type: DWord, value: 0 }
+
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Feeds
+            add:
+              ShellFeedsTaskbarViewMode: { type: DWord, value: 2 }
+              IsFeedsAvailable: { type: DWord, value: 0 }
+
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Dsh
+            add:
+              AllowNewsAndInterests: { type: DWord, value: 0 }
+
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\Windows Feeds
+            add:
+              EnableFeeds: { type: DWord, value: 0 }
+
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests
+            add:
+              value: { type: DWord, value: 0 }
+
+    - name: "Phone Link, Suggested Apps, and Content Delivery registry settings"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Mobility
+            add:
+              OptedIn: { type: DWord, value: 0 }
+
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.Suggested
+            add:
+              Enabled: { type: DWord, value: 0 }
+
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+            add:
+              SubscribedContent-88000326Enabled: { type: DWord, value: 0 }
+              SubscribedContent-353698Enabled: { type: DWord, value: 0 }
+              ContentDeliveryAllowed: { type: DWord, value: 0 }
+              PreInstalledAppsEverEnabled: { type: DWord, value: 0 }
+              SilentInstalledAppsEnabled: { type: DWord, value: 0 }
+              SubscribedContent-314559Enabled: { type: DWord, value: 0 }
+              SubscribedContent-338387Enabled: { type: DWord, value: 0 }
+              SubscribedContent-338389Enabled: { type: DWord, value: 0 }
+              SystemPaneSuggestionsEnabled: { type: DWord, value: 0 }
+              SubscribedContent-338393Enabled: { type: DWord, value: 0 }
+              SubscribedContent-353694Enabled: { type: DWord, value: 0 }
+              SubscribedContent-353696Enabled: { type: DWord, value: 0 }
+              SubscribedContent-310093Enabled: { type: DWord, value: 0 }
+              SubscribedContent-338388Enabled: { type: DWord, value: 0 }
+              SubscribedContentEnabled: { type: DWord, value: 0 }
+              SoftLandingEnabled: { type: DWord, value: 0 }
+              FeatureManagementEnabled: { type: DWord, value: 0 }
+
+          - hive: HKCU
+            path: Software\Policies\Microsoft\Windows\Explorer
+            add:
+              DisableSearchBoxSuggestions: { type: DWord, value: 1 }
+
+          - hive: HKLM
+            path: Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+            add:
+              AllowOnlineTips: { type: DWord, value: 0 }
+
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\Explorer
+            add:
+              DisableSearchBoxSuggestions: { type: DWord, value: 1 }

@@ -1,0 +1,82 @@
+# Simpler method to disable Windows Defender.
+# Only for Windows 7, 8 and 8.1.
+
+jobs:
+  - name: "Disable Windows Defender - Advanced"
+    description: "Further disables Windows Defender core features, real-time protection, PUA, network scanning, SpyNet, and startup entries."
+    condition:
+      windows: [7, 8]
+    steps:
+      - name: "Windows Defender Core Policies"
+        registry:
+          entries:
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows Defender
+              add:
+                DisableAntiVirus: { type: DWord, value: 1 }
+                DisableSpecialRunningModes: { type: DWord, value: 1 }
+                DisableRoutinelyTakingAction: { type: DWord, value: 1 }
+                ServiceKeepAlive: { type: DWord, value: 0 }
+                PUAProtection: { type: DWord, value: 0 }
+                DisableAntiSpyware: { type: DWord, value: 1 }
+                DisableRealtimeMonitoring: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: Software\Policies\Microsoft\Windows Defender\Reporting
+              add:
+                DisableEnhancedNotifications: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection
+              add:
+                DisableRealtimeMonitoring: { type: DWord, value: 1 }
+                DisableBehaviorMonitoring: { type: DWord, value: 1 }
+                DisableOnAccessProtection: { type: DWord, value: 1 }
+                DisableScanOnRealtimeEnable: { type: DWord, value: 1 }
+                DisableIOAVProtection: { type: DWord, value: 1 }
+                DisableRoutinelyTakingAction: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows Defender\Signature Updates
+              add:
+                ForceUpdateFromMU: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows Defender\Spynet
+              add:
+                DisableBlockAtFirstSeen: { type: DWord, value: 1 }
+                SpyNetReporting: { type: DWord, value: 0 }
+                SubmitSamplesConsent: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows Defender\MpEngine
+              add:
+                MpEnablePus: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows Defender\Policy Manager
+              add:
+                DisableScanningNetworkFiles: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\MRT
+              add:
+                DontReportInfectionInformation: { type: DWord, value: 1 }
+
+      - name: "Remove CLSID entry for Defender"
+        registry:
+          entries:
+            - hive: HKCR
+              path: CLSID
+              delete:
+                keys:
+                - "{09A47860-11B0-4DA5-AFA5-26D86198A780}"
+
+      - name: "Disable systray icon"
+        registry:
+          entries:
+            - hive: HKLM
+              path: Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run
+              delete:
+                values:
+                - SecurityHealth
+                - WindowsDefender
+            - hive: HKLM
+              path: Software\Microsoft\Windows\CurrentVersion\Run
+              delete:
+                values:
+                - SecurityHealth
+                - WindowsDefender

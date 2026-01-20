@@ -1,0 +1,221 @@
+jobs:
+  - name: "Privacy & Telemetry Hardening"
+    description: "Disables Windows telemetry, personalized experiences, location tracking, ads, feedback, and cross-device features."
+    condition:
+      windows: [10, 11]
+    steps:
+      - name: "Disable Spotlight, Tailored Experiences, and Cloud Content"
+        registry:
+          entries:
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+              add:
+                DisableWindowsSpotlightFeatures: { type: DWord, value: 1 }
+                DisableTailoredExperiencesWithDiagnosticData: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\CloudContent
+              add:
+                DisableCloudOptimizedContent: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\DataCollection
+              add:
+                DoNotShowFeedbackNotifications: { type: DWord, value: 1 }
+
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo
+              add:
+                Enabled: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\PolicyManager\current\device\Bluetooth
+              add:
+                AllowAdvertising: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+              add:
+                DisableAutomaticRestartSignOn: { type: DWord, value: 1 }
+                UploadUserActivities: { type: DWord, value: 0 }
+                EnableActivityFeed: { type: DWord, value: 0 }
+                EnableCdp: { type: DWord, value: 0 }
+                AllowCrossDeviceClipboard: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo
+              add:
+                DisabledByGroupPolicy: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\TabletPC
+              add:
+                PreventHandwritingDataSharing: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\TextInput
+              add:
+                AllowLinguisticDataCollection: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\InputPersonalization
+              add:
+                AllowInputPersonalization: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\SearchSettings
+              add:
+                SafeSearchMode: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\System
+              add:
+                UploadUserActivities: { type: DWord, value: 0 }
+                EnableCdp: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\SettingSync
+              add:
+                DisableCredentialsSettingSync: { type: DWord, value: 2 }
+                DisableCredentialsSettingSyncUserOverride: { type: DWord, value: 1 }
+                DisableApplicationSettingSync: { type: DWord, value: 2 }
+                DisableApplicationSettingSyncUserOverride: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\AppPrivacy
+              add:
+                LetAppsActivateWithVoice: { type: DWord, value: 2 }
+                LetAppsSyncWithDevices: { type: DWord, value: 2 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\FindMyDevice
+              add:
+                AllowFindMyDevice: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\Settings\FindMyDevice
+              add:
+                LocationSyncEnabled: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\LocationAndSensors
+              add:
+                DisableLocation: { type: DWord, value: 1 }
+                DisableLocationScripting: { type: DWord, value: 1 }
+                DisableWindowsLocationProvider: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration
+              add:
+                Status: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Biometrics
+              add:
+                Enabled: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\Feeds
+              add:
+                ShellFeedsTaskbarOpenOnHover: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\CDP
+              add:
+                CdpSessionUserAuthzPolicy: { type: DWord, value: 0 }
+                NearShareChannelUserAuthzPolicy: { type: DWord, value: 0 }
+                RomeSdkChannelUserAuthzPolicy: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: Software\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform
+              add:
+                NoGenTicket: { type: DWord, value: 1 }
+
+            - hive: HKCU
+              path: Control Panel\International\User Profile
+              add:
+                HttpAcceptLanguageOptOut: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\Windows\CurrentVersion\SmartGlass
+              add:
+                UserAuthPolicy: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: SOFTWARE\Microsoft\Personalization\Settings
+              add:
+                AcceptedPrivacyPolicy: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Language
+              add:
+                Enabled: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: SOFTWARE\Microsoft\InputPersonalization
+              add:
+                RestrictImplicitTextCollection: { type: DWord, value: 1 }
+                RestrictImplicitInkCollection: { type: DWord, value: 1 }
+
+            - hive: HKCU
+              path: SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore
+              add:
+                HarvestContacts: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: SOFTWARE\Microsoft\Input\TIPC
+              add:
+                Enabled: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\Global\LooselyCoupled
+              add:
+                Value: { type: String, value: "Deny" }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection
+              add:
+                MaxTelemetryAllowed: { type: DWord, value: 0 }
+                AllowTelemetry: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\DataCollection
+              add:
+                AllowTelemetry: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SYSTEM\ControlSet001\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener
+              add:
+                Start: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener
+              add:
+                Start: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config
+              add:
+                AutoConnectAllowedOEM: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\WcmSvc\Tethering
+              add:
+                Hotspot2SignUp: { type: DWord, value: 1 }
+                RemoteStartupDisabled: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\WlanSvc\AnqpCache
+              add:
+                OsuRegistrationStatus: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows\Connect
+              add:
+                AllowProjectionToPC: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: Software\Policies\Microsoft\Windows\System
+              add:
+                EnableMmx: { type: DWord, value: 0 }
+                RSoPLogging: { type: DWord, value: 0 }

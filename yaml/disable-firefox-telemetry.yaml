@@ -1,0 +1,17 @@
+jobs:
+  - name: "Disable Mozilla Firefox Telemetry"
+    description: "Disables Firefox telemetry, default browser agent, and related scheduled tasks."
+    steps:
+      - name: "Set Firefox Telemetry and Default Browser Agent Policies"
+        registry:
+          entries:
+            - hive: HKLM
+              path: SOFTWARE\Policies\Mozilla\Firefox
+              add:
+                DisableTelemetry: { type: DWord, value: 1 }
+                DisableDefaultBrowserAgent: { type: DWord, value: 1 }
+
+      - name: "Disable Firefox Default Browser Agent Scheduled Tasks"
+        commands:
+          - 'schtasks.exe /change /disable /tn "\\Mozilla\\Firefox Default Browser Agent 308046B0AF4A39CB"'
+          - 'schtasks.exe /change /disable /tn "\\Mozilla\\Firefox Default Browser Agent D2CEEC440E2074BD"'

@@ -1,0 +1,48 @@
+jobs:
+- name: "Security and SmartScreen Settings"
+  description: "Configure SmartScreen, attachments, IE phishing filter, AppHost, and security notifications"
+  steps:
+
+    - name: "Security-related registry settings"
+      registry:
+        entries:
+          # Attachments
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Policies\Attachments
+            add:
+              SaveZoneInformation: { type: DWord, value: 1 }
+
+          - hive: HKLM
+            path: Software\Microsoft\Windows\CurrentVersion\Policies\Attachments
+            add:
+              ScanWithAntiVirus: { type: DWord, value: 1 }
+
+          # SmartScreen / System
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\System
+            add:
+              ShellSmartScreenLevel: { type: String, value: "Warn" }
+              EnableSmartScreen: { type: DWord, value: 0 }
+
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
+            add:
+              SmartScreenEnabled: { type: String, value: "Off" }
+
+          # Internet Explorer phishing filter
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\Internet Explorer\PhishingFilter
+            add:
+              EnabledV9: { type: DWord, value: 0 }
+
+          # AppHost
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\AppHost
+            add:
+              PreventOverride: { type: DWord, value: 0 }
+
+          # Security and Maintenance notifications
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance
+            add:
+              Enabled: { type: DWord, value: 0 }

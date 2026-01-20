@@ -1,0 +1,69 @@
+<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+  <style>
+    text { shape-rendering: geometricPrecision; }
+  </style>
+  <defs>
+    <linearGradient id="terminalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="checkGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#50fa50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#32CD32;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="1200" height="400" fill="#0d0d0d"/>
+  
+  <rect x="40" y="40" width="1120" height="320" fill="url(#terminalGrad)" stroke="#32CD32" stroke-width="6"/>
+  
+  <line x1="40" y1="110" x2="1160" y2="110" stroke="#32CD32" stroke-width="1.5" opacity="0.3"/>
+  
+  <circle cx="70" cy="75" r="8" fill="#ff5f56"/>
+  <circle cx="95" cy="75" r="8" fill="#ffbd2e"/>
+  <circle cx="120" cy="75" r="8" fill="#27c93f"/>
+  
+  <text x="70" y="155" font-family="'SF Mono', 'Consolas', 'Courier New', monospace" font-size="38" fill="#32CD32" font-weight="700" letter-spacing="1">$: optimizerNXT apply ...</text>
+  
+  <line x1="70" y1="175" x2="520" y2="175" stroke="#32CD32" stroke-width="2" opacity="0.2"/>
+  
+  <circle cx="900" cy="200" r="120" fill="none" stroke="#32CD32" stroke-width="3" opacity="0.3">
+    <animate attributeName="r" values="110;135;110" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="900" cy="200" r="90" fill="none" stroke="#50fa50" stroke-width="2.5" opacity="0.4">
+    <animate attributeName="r" values="85;100;85" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="900" cy="200" r="60" fill="#32CD32" opacity="0.05">
+    <animate attributeName="r" values="60;75;60" dur="1.8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.05;0.15;0.05" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  
+  <path d="M 840 200 L 880 240 L 960 160" 
+        fill="none" 
+        stroke="#1a1a1a" 
+        stroke-width="20" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <path d="M 840 200 L 880 240 L 960 160" 
+        fill="none" 
+        stroke="url(#checkGlow)" 
+        stroke-width="16" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        filter="url(#glow)"/>
+  
+  <circle cx="55" cy="345" r="3" fill="#32CD32" opacity="0.4"/>
+  <circle cx="75" cy="345" r="3" fill="#32CD32" opacity="0.4"/>
+  <circle cx="95" cy="345" r="3" fill="#32CD32" opacity="0.4"/>
+</svg>

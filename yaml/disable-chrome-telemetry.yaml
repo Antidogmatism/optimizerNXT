@@ -1,0 +1,21 @@
+jobs:
+  - name: "Disable Google Chrome Telemetry"
+    description: "Disables Chrome telemetry, cleanup reporting, and feedback collection."
+    steps:
+      - name: "Deny software reporter process"
+        processControl:
+          deny:
+          - software_reporter_tool.exe
+
+      - name: "Set Chrome Telemetry and Feedback Policies"
+        registry:
+          entries:
+            - hive: HKLM
+              path: SOFTWARE\Policies\Google\Chrome
+              add:
+                MetricsReportingEnabled: { type: DWord, value: 0 }
+                ChromeCleanupReportingEnabled: { type: DWord, value: 0 }
+                ChromeCleanupEnabled: { type: DWord, value: 0 }
+                UserFeedbackAllowed: { type: DWord, value: 0 }
+                DeviceMetricsReportingEnabled: { type: DWord, value: 0 }
+                ExtensionManifestV2Availability: { type: DWord, value: 2 }

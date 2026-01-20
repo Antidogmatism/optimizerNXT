@@ -1,0 +1,49 @@
+jobs:
+  - name: "Uninstall OneDrive"
+    description: "Completely remove OneDrive from the system"
+    steps:
+
+    - name: "Kill OneDrive process"
+      exec:
+        type: cmd
+        commands:
+        - "taskkill /f /im OneDrive.exe > NUL 2>&1"
+        - "ping 127.0.0.1 -n 5 > NUL 2>&1"
+
+    - name: "Uninstall OneDrive x64"
+      condition:
+        bitness: x64
+      exec:
+        type: cmd
+        commands:
+        - "%SYSTEMROOT%\\SysWOW64\\OneDriveSetup.exe /uninstall"
+
+    - name: "Uninstall OneDrive x86"
+      condition:
+        bitness: x86
+      exec:
+        type: cmd
+        commands:
+        - "%SYSTEMROOT%\\System32\\OneDriveSetup.exe /uninstall"
+
+    - name: "Disable OneDrive sync"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\OneDrive
+            add:
+              DisableFileSyncNGSC: { type: DWord, value: 1 }
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\OneDrive
+            add:
+              PreventNetworkTrafficPreUserSignIn: { type: DWord, value: 1 }
+
+    - name: "Delete OneDrive tasks"
+      exec:
+        type: cmd
+        commands:
+        - 'SCHTASKS /Delete /TN "OneDrive Standalone Update Task" /F'
+        - 'SCHTASKS /Delete /TN "OneDrive Standalone Update Task v2" /F'
+    
+
+          

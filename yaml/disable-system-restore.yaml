@@ -1,0 +1,26 @@
+jobs:
+  - name: "Disable System Restore"
+    description: "Disables System Restore and deletes all snapshots"
+    steps:
+
+    - name: "Delete all system restore snapshots"
+      exec:
+        type: cmd
+        commands:
+        - "vssadmin delete shadows /for=c: /all /quiet"
+
+    - name: "Set VSS to manual"
+      service:
+        stop:
+          - VSS
+        enable:
+          - VSS
+
+    - name: "Disable VSS snapshots"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore
+            add:
+              DisableSR: { type: DWord, value: 1 }
+              DisableConfig: { type: DWord, value: 1 }

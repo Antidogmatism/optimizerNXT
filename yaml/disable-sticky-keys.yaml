@@ -1,0 +1,39 @@
+jobs:
+- name: "Disable Sticky Keys"
+  description: "Set Flags for StickyKeys, ToggleKeys, and Keyboard Response for current user and default user"
+  steps:
+
+    - name: "Accessibility registry settings"
+      registry:
+        entries:
+          # Current user
+          - hive: HKCU
+            path: Control Panel\Accessibility\StickyKeys
+            add:
+              Flags: { type: String, value: "506" }
+
+          - hive: HKCU
+            path: Control Panel\Accessibility\Keyboard Response
+            add:
+              Flags: { type: String, value: "122" }
+
+          - hive: HKCU
+            path: Control Panel\Accessibility\ToggleKeys
+            add:
+              Flags: { type: String, value: "58" }
+
+          # Default user
+          - hive: HKEY_USERS
+            path: .DEFAULT\Control Panel\Accessibility\StickyKeys
+            add:
+              Flags: { type: String, value: "506" }
+
+          - hive: HKEY_USERS
+            path: .DEFAULT\Control Panel\Accessibility\Keyboard Response
+            add:
+              Flags: { type: String, value: "122" }
+
+          - hive: HKEY_USERS
+            path: .DEFAULT\Control Panel\Accessibility\ToggleKeys
+            add:
+              Flags: { type: String, value: "58" }

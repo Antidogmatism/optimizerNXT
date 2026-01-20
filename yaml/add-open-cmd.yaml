@@ -1,0 +1,45 @@
+jobs:
+  - name: "Add Open Command Prompt context menu"
+    description: "Adds 'Open Command Prompt here' option in context menu."
+    steps:
+      - name: "Directory context menu"
+        registry:
+          entries:
+            - hive: HKCR
+              path: 'Directory\shell\OpenWithCMD'
+              add:
+                "": { type: String, value: "Open Command Prompt here" }
+                Icon: { type: String, value: "cmd.exe" }
+                NoWorkingDirectory: { type: String, value: "" }
+            - hive: HKCR
+              path: 'Directory\shell\OpenWithCMD\command'
+              add:
+                "": { type: String, value: 'cmd.exe /s /k pushd "%V"' }
+
+      - name: "Directory background context menu"
+        registry:
+          entries:
+            - hive: HKCR
+              path: 'Directory\Background\shell\OpenWithCMD'
+              add:
+                "": { type: String, value: "Open Command Prompt here" }
+                Icon: { type: String, value: "cmd.exe" }
+                NoWorkingDirectory: { type: String, value: "" }
+            - hive: HKCR
+              path: 'Directory\Background\shell\OpenWithCMD\command'
+              add:
+                "": { type: String, value: 'cmd.exe /s /k pushd "%V"' }
+
+      - name: "Drive context menu"
+        registry:
+          entries:
+            - hive: HKCR
+              path: 'Drive\shell\OpenWithCMD'
+              add:
+                "": { type: String, value: "Open Command Prompt here" }
+                Icon: { type: String, value: "cmd.exe" }
+                NoWorkingDirectory: { type: String, value: "" }
+            - hive: HKCR
+              path: 'Drive\shell\OpenWithCMD\command'
+              add:
+                "": { type: String, value: 'cmd.exe /s /k pushd "%V"' }

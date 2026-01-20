@@ -1,0 +1,72 @@
+jobs:
+  - name: "Disable Game Bar, Xbox Services, and Game DVR"
+    description: "Optimize system by disabling Xbox services, Game Bar telemetry, and Game DVR functionality"
+    condition:
+      windows: [10, 11]
+    steps:
+
+      - name: "GameDVR and GameBar registry settings"
+        registry:
+          entries:
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\GameDVR
+              add:
+                AppCaptureEnabled: { type: DWord, value: 0 }
+                AudioCaptureEnabled: { type: DWord, value: 0 }
+                CursorCaptureEnabled: { type: DWord, value: 0 }
+            - hive: HKCU
+              path: Software\Microsoft\GameBar
+              add:
+                UseNexusForGameBarEnabled: { type: DWord, value: 0 }
+                ShowStartupPanel: { type: DWord, value: 0 }
+            - hive: HKCU
+              path: System\GameConfigStore
+              add:
+                GameDVR_Enabled: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: Software\Policies\Microsoft\Windows\GameDVR
+              add:
+                AllowGameDVR: { type: DWord, value: 0 }
+
+      - name: "Configure Graphics Drivers and Game Bar registry settings"
+        registry:
+          entries:
+            - hive: HKLM
+              path: SYSTEM\CurrentControlSet\Control\GraphicsDrivers
+              add:
+                HwSchMode: { type: DWord, value: 2 }
+
+            - hive: HKCU
+              path: Software\Microsoft\GameBar
+              add:
+                AllowAutoGameMode: { type: DWord, value: 1 }
+                AutoGameModeEnabled: { type: DWord, value: 1 }
+
+            - hive: HKCU
+              path: System\GameConfigStore
+              add:
+                GameDVR_FSEBehaviorMode: { type: DWord, value: 2 }
+
+      - name: "Stop Xbox-related services"
+        service:
+          stop:
+            - XboxNetApiSvc
+            - XblAuthManager
+            - XblGameSave
+            - XboxGipSvc
+            - xbgm
+          disable:
+            - XboxNetApiSvc
+            - XblAuthManager
+            - XblGameSave
+            - XboxGipSvc
+            - xbgm
+
+      - name: "Disable Xbox scheduled tasks"
+        exec:
+          type: cmd
+          commands:
+          - 'schtasks /end /tn "\Microsoft\XblGameSave\XblGameSaveTask"'
+          - 'schtasks /change /tn "\Microsoft\XblGameSave\XblGameSaveTask" /disable'
+          - 'schtasks /end /tn "\Microsoft\XblGameSave\XblGameSaveTaskLogon"'
+          - 'schtasks /change /tn "\Microsoft\XblGameSave\XblGameSaveTaskLogon" /disable'

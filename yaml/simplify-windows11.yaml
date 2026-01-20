@@ -1,0 +1,45 @@
+jobs:
+  - name: "Simplify Windows 11"
+    condition:
+      windows: [11]
+    description: "Disables taskbar features, Meet, and stickers."
+    steps:
+      - name: "Taskbar and Snap Assist settings"
+        registry:
+          entries:
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+              add:
+                TaskbarAl: { type: DWord, value: 0 }
+                EnableSnapAssistFlyout: { type: DWord, value: 0 }
+                TaskbarDa: { type: DWord, value: 0 }
+                TaskbarMn: { type: DWord, value: 0 }
+            - hive: HKCU
+              path: Control Panel\Desktop
+              add:
+                DockMoving: { type: String, value: "0" }
+
+      - name: "Disable Meet Now"
+        registry:
+          entries:
+            - hive: HKCU
+              path: Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+              add:
+                HideSCAMeetNow: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer
+              add:
+                HideSCAMeetNow: { type: DWord, value: 1 }
+
+      - name: "Disable Show More Options and stickers"
+        registry:
+          entries:
+            - hive: HKCU
+              path: Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32
+              add:
+                "": { type: String, value: "" }
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\PolicyManager\current\device\Stickers
+              delete:
+                values:
+                - EnableStickers

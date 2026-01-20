@@ -1,0 +1,231 @@
+jobs:
+  - name: "Enable Performance Tweaks"
+    description: "System performance optimizations"
+    steps:
+
+    - name: "Disable NTFS timestamp"
+      exec:
+        type: cmd
+        commands:
+        - "fsutil behavior set disablelastaccess 1"
+
+    - name: "Enable Legacy Volume Sliders"
+      condition:
+        windows: [10]
+      registry:
+        entries:
+          - hive: HKLM
+            path: Software\Microsoft\Windows NT\CurrentVersion\MTCUVC
+            add:
+              EnableMtcUvc: { type: DWord, value: 0 }
+          - hive: HKLM
+            path: SYSTEM\CurrentControlSet\Control\FileSystem
+            add:
+              LongPathsEnabled: { type: DWord, value: 1 }
+
+    - name: "Disable Transparency Effects"
+      condition:
+        windows: [10, 11]
+      registry:
+        entries:
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize
+            add:
+              EnableTransparency: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Windows\DWM
+            add:
+              ColorPrevalence: { type: DWord, value: 1 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize
+            add:
+              ColorPrevalence: { type: DWord, value: 0 }
+
+    - name: "Disable Windows reporting services"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting
+            add:
+              Disabled: { type: DWord, value: 1 }
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting
+            add:
+              DoReport: { type: DWord, value: 0 }
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance
+            add:
+              MaintenanceDisabled: { type: DWord, value: 1 }
+
+    - name: "Disable Network Throttling"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile
+            add:
+              NetworkThrottlingIndex: { type: DWord, value: 4294967295 }
+
+    - name: "Set NonBestEffortLimit to 0"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\Psched
+            add:
+              NonBestEffortLimit: { type: DWord, value: 0 }
+
+    - name: "Run Dialog AutoComplete"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Explorer\AutoComplete
+            add:
+              Append Completion: { type: String, value: "yes" }
+              AutoSuggest: { type: String, value: "yes" }
+
+    - name: "Disable Remote Assistance"
+      registry:
+        entries:
+          - hive: HKLM
+            path: System\CurrentControlSet\Control\Remote Assistance
+            add:
+              fAllowToGetHelp: { type: DWord, value: 0 }
+
+    - name: "Explorer Shaking & File Ext"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+            add:
+              DisallowShaking: { type: DWord, value: 1 }
+              HideFileExt: { type: DWord, value: 0 }
+              Hidden: { type: DWord, value: 1 }
+
+    - name: "Context Menu Handlers"
+      registry:
+        entries:
+          - hive: HKCR
+            path: AllFilesystemObjects\shellex\ContextMenuHandlers
+            add:
+              Copy To: { type: String, value: "{C2FBB630-2971-11D1-A18C-00C04FD75D13}" }
+              Move To: { type: String, value: "{C2FBB631-2971-11D1-A18C-00C04FD75D13}" }
+
+    - name: "Control Panel Desktop Tweaks"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Control Panel\Desktop
+            add:
+              AutoEndTasks: { type: String, value: "1" }
+              HungAppTimeout: { type: String, value: "1000" }
+              WaitToKillAppTimeout: { type: String, value: "2000" }
+              LowLevelHooksTimeout: { type: String, value: "1000" }
+
+    - name: "Explorer Policies"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+            add:
+              NoLowDiskSpaceChecks: { type: DWord, value: 1 }
+              LinkResolveIgnoreLinkInfo: { type: DWord, value: 1 }
+              NoResolveSearch: { type: DWord, value: 1 }
+              NoResolveTrack: { type: DWord, value: 1 }
+              NoInternetOpenWith: { type: DWord, value: 1 }
+
+    - name: "Crash Control"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SYSTEM\CurrentControlSet\Control\CrashControl
+            add:
+              CrashDumpEnabled: { type: DWord, value: 3 }
+
+    - name: "Service Wait Timeout"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SYSTEM\CurrentControlSet\Control
+            add:
+              WaitToKillServiceTimeout: { type: String, value: "2000" }
+
+    - name: "Multimedia SystemProfile"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile
+            add:
+              SystemResponsiveness: { type: DWord, value: 1 }
+              NoLazyMode: { type: DWord, value: 1 }
+              AlwaysOn: { type: DWord, value: 1 }
+
+    - name: "Multimedia Tasks - Games"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games
+            add:
+              GPU Priority: { type: DWord, value: 8 }
+              Priority: { type: DWord, value: 6 }
+              Scheduling Category: { type: String, value: "High" }
+              SFIO Priority: { type: String, value: "High" }
+
+    - name: "Multimedia Tasks - Low Latency"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Low Latency
+            add:
+              GPU Priority: { type: DWord, value: 0 }
+              Priority: { type: DWord, value: 8 }
+              Scheduling Category: { type: String, value: "Medium" }
+              SFIO Priority: { type: String, value: "High" }
+
+    - name: "Media Foundation Frame Server"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\WOW6432Node\Microsoft\Windows Media Foundation
+            add:
+              EnableFrameServerMode: { type: DWord, value: 0 }
+
+    - name: "Set MenuShowDelay and MouseHoverTime faster"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Control Panel\Desktop
+            add:
+              MenuShowDelay: { type: DWord, value: 0 }
+
+          - hive: HKCU
+            path: Control Panel\Mouse
+            add:
+              MouseHoverTime: { type: DWord, value: 0 }
+
+    - name: "Disable Telemetry Services"
+      service:
+        stop:
+          - RemoteRegistry
+          - DiagTrack
+          - diagsvc
+          - dmwappushservice
+          - WMPNetworkSvc
+          - HomeGroupListener
+          - HomeGroupProvider
+          - PcaSvc
+          - WSearch
+          - WerSvc
+          - wercplsupport
+        disable:
+          - RemoteRegistry
+          - DiagTrack
+          - diagsvc
+          - dmwappushservice
+          - WMPNetworkSvc
+          - HomeGroupListener
+          - HomeGroupProvider
+          - PcaSvc
+          - WSearch
+          - WerSvc
+          - wercplsupport
+        enable:
+          - Spooler

@@ -1,0 +1,121 @@
+jobs:
+- name: "Disable Office Telemetry, Logging, and OSM"
+  description: "Prevent Office telemetry, logging, feedback, and restrict certain Office apps and solution types"
+  steps:
+
+    - name: "Prevent specific Office applications (OSM)"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Policies\Microsoft\Office\16.0\OSM\PreventedApplications
+            add:
+              accesssolution: { type: DWord, value: 1 }
+              olksolution: { type: DWord, value: 1 }
+              onenotesolution: { type: DWord, value: 1 }
+              pptsolution: { type: DWord, value: 1 }
+              projectsolution: { type: DWord, value: 1 }
+              publishersolution: { type: DWord, value: 1 }
+              visiosolution: { type: DWord, value: 1 }
+              wdsolution: { type: DWord, value: 1 }
+              xlsolution: { type: DWord, value: 1 }
+
+    - name: "Prevent specific Office solution types (OSM)"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Policies\Microsoft\Office\16.0\OSM\PreventedSolutionTypes
+            add:
+              agave: { type: DWord, value: 1 }
+              appaddins: { type: DWord, value: 1 }
+              comaddins: { type: DWord, value: 1 }
+              documentfiles: { type: DWord, value: 1 }
+              templatefiles: { type: DWord, value: 1 }
+
+    - name: "Disable Office telemetry scheduled tasks"
+      exec:
+        type: cmd
+        commands:
+          - 'schtasks /end /tn "\Microsoft\Office\OfficeTelemetryAgentFallBack2016"'
+          - 'schtasks /change /tn "\Microsoft\Office\OfficeTelemetryAgentFallBack2016" /disable'
+          - 'schtasks /end /tn "\Microsoft\Office\OfficeTelemetryAgentLogOn2016"'
+          - 'schtasks /change /tn "\Microsoft\Office\OfficeTelemetryAgentLogOn2016" /disable'
+          - 'schtasks /end /tn "\Microsoft\Office\OfficeTelemetryAgentFallBack"'
+          - 'schtasks /change /tn "\Microsoft\Office\OfficeTelemetryAgentFallBack" /disable'
+          - 'schtasks /end /tn "\Microsoft\Office\OfficeTelemetryAgentLogOn"'
+          - 'schtasks /change /tn "\Microsoft\Office\OfficeTelemetryAgentLogOn" /disable'
+
+    - name: "Disable Office logging"
+      registry:
+        entries:
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\15.0\Outlook\Options\Mail
+            add:
+              EnableLogging: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\16.0\Outlook\Options\Mail
+            add:
+              EnableLogging: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\15.0\Outlook\Options\Calendar
+            add:
+              EnableCalendarLogging: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\16.0\Outlook\Options\Calendar
+            add:
+              EnableCalendarLogging: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\15.0\Word\Options
+            add:
+              EnableLogging: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\16.0\Word\Options
+            add:
+              EnableLogging: { type: DWord, value: 0 }
+
+    - name: "Disable Office OSM uploads and logging"
+      registry:
+        entries:
+          - hive: HKCU
+            path: SOFTWARE\Policies\Microsoft\Office\15.0\OSM
+            add:
+              EnableLogging: { type: DWord, value: 0 }
+              EnableUpload: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Policies\Microsoft\Office\16.0\OSM
+            add:
+              EnableLogging: { type: DWord, value: 0 }
+              EnableUpload: { type: DWord, value: 0 }
+
+    - name: "Disable Office Client Telemetry"
+      registry:
+        entries:
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\Common\ClientTelemetry
+            add:
+              DisableTelemetry: { type: DWord, value: 1 }
+              VerboseLogging: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\16.0\Common\ClientTelemetry
+            add:
+              DisableTelemetry: { type: DWord, value: 1 }
+              VerboseLogging: { type: DWord, value: 0 }
+
+    - name: "Disable Office QM and Feedback"
+      registry:
+        entries:
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\15.0\Common
+            add:
+              QMEnable: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\16.0\Common
+            add:
+              QMEnable: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\15.0\Common\Feedback
+            add:
+              Enabled: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Office\16.0\Common\Feedback
+            add:
+              Enabled: { type: DWord, value: 0 }

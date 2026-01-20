@@ -1,0 +1,17 @@
+jobs:
+  - name: "Disable NVIDIA Telemetry"
+    description: "Stops and disables NVIDIA telemetry services and scheduled tasks."
+    steps:
+      - name: "Set NVIDIA Telemetry Service to Disabled"
+        service:
+          stop:
+          - NvTelemetryContainer
+          disable:
+          - NvTelemetryContainer
+
+      - name: "Disable NVIDIA Telemetry Scheduled Tasks"
+        commands:
+          - 'schtasks.exe /change /tn NvTmRepOnLogon_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8} /disable'
+          - 'schtasks.exe /change /tn NvTmRep_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8} /disable'
+          - 'schtasks.exe /change /tn NvTmMon_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8} /disable'
+

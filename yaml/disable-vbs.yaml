@@ -1,0 +1,13 @@
+jobs:
+  - name: "Disable Virtualization-Based Security"
+    condition:
+      windows: [10, 11]
+    description: "Disables Virtualization-Based Security in DeviceGuard."
+    steps:
+      - name: "Configure Virtualization-Based Security"
+        registry:
+          entries:
+            - hive: HKLM
+              path: SYSTEM\CurrentControlSet\Control\DeviceGuard
+              add:
+                EnableVirtualizationBasedSecurity: { type: DWord, value: 0 }

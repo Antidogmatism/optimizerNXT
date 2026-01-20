@@ -1,0 +1,27 @@
+jobs:
+  - name: "Bypass Hardware Checks for Windows Upgrade"
+    condition:
+      windows: [10, 11]
+    description: "Allows upgrades on unsupported TPM/CPU and bypasses other hardware checks."
+    steps:
+      - name: "MoSetup and LabConfig registry tweaks"
+        registry:
+          entries:
+            - hive: HKLM
+              path: SYSTEM\Setup\MoSetup
+              add:
+                AllowUpgradesWithUnsupportedTPMOrCPU: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SYSTEM\Setup\LabConfig
+              add:
+                BypassCPUCheck: { type: DWord, value: 1 }
+                BypassStorageCheck: { type: DWord, value: 1 }
+                BypassTPMCheck: { type: DWord, value: 1 }
+                BypassRAMCheck: { type: DWord, value: 1 }
+                BypassSecureBootCheck: { type: DWord, value: 1 }
+
+            - hive: HKCU
+              path: Control Panel\UnsupportedHardwareNotificationCache
+              add:
+                SV2: { type: DWord, value: 0 }

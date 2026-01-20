@@ -1,0 +1,33 @@
+jobs:
+- name: "Disable Windows Ink, Touch, Spelling, and Typing Features"
+  description: "Turn off Windows Ink Workspace, touch inking, autocorrection, spellchecking, and text prediction"
+  condition:
+    windows: [10, 11]
+  steps:
+
+    - name: "Windows Ink and TabletTip registry settings"
+      registry:
+        entries:
+          # Windows Ink Workspace
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\WindowsInkWorkspace
+            add:
+              AllowWindowsInkWorkspace: { type: DWord, value: 0 }
+              AllowSuggestedAppsInWindowsInkWorkspace: { type: DWord, value: 0 }
+
+          # Touch and inking
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\TabletTip\1.7
+            add:
+              EnableInkingWithTouch: { type: DWord, value: 0 }
+              EnableAutocorrection: { type: DWord, value: 0 }
+              EnableSpellchecking: { type: DWord, value: 0 }
+              EnableDoubleTapSpace: { type: DWord, value: 0 }
+              EnablePredictionSpaceInsertion: { type: DWord, value: 0 }
+              EnableTextPrediction: { type: DWord, value: 0 }
+
+          # Typing insights
+          - hive: HKCU
+            path: Software\Microsoft\Input\Settings
+            add:
+              InsightsEnabled: { type: DWord, value: 0 }

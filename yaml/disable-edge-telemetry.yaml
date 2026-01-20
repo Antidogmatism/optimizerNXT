@@ -1,0 +1,47 @@
+jobs:
+  - name: "Disable Microsoft Edge Telemetry and Personalization"
+    condition:
+      windows: [10, 11]
+    description: "Disables Edge sidebar, personalization, telemetry, feedback, SmartScreen, and other tracking features."
+    steps:
+      - name: "Edge Policies Registry Settings"
+        registry:
+          entries:
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Edge
+              add:
+                HubsSidebarEnabled: { type: DWord, value: 0 }
+                WebWidgetAllowed: { type: DWord, value: 0 }
+                PersonalizationReportingEnabled: { type: DWord, value: 0 }
+                UserFeedbackAllowed: { type: DWord, value: 0 }
+                MetricsReportingEnabled: { type: DWord, value: 0 }
+                ExtensionManifestV2Availability: { type: DWord, value: 2 }
+                Edge3PSerpTelemetryEnabled: { type: DWord, value: 0 }
+                SpotlightExperiencesAndRecommendationsEnabled: { type: DWord, value: 0 }
+                DefaultBrowserSettingsCampaignEnabled: { type: DWord, value: 0 }
+                ComposeInlineEnabled: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: SOFTWARE\Policies\Microsoft\Edge
+              add:
+                HubsSidebarEnabled: { type: DWord, value: 0 }
+                PersonalizationReportingEnabled: { type: DWord, value: 0 }
+                UserFeedbackAllowed: { type: DWord, value: 0 }
+                MetricsReportingEnabled: { type: DWord, value: 0 }
+                SpotlightExperiencesAndRecommendationsEnabled: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\MicrosoftEdge\BooksLibrary
+              add:
+                EnableExtendedBooksTelemetry: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: SOFTWARE\Policies\Microsoft\MicrosoftEdge\BooksLibrary
+              add:
+                EnableExtendedBooksTelemetry: { type: DWord, value: 0 }
+
+            - hive: HKCU
+              path: Software\Microsoft\Edge
+              add:
+                SmartScreenEnabled: { type: DWord, value: 0 }
+                SmartScreenPuaEnabled: { type: DWord, value: 0 }

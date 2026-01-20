@@ -1,0 +1,160 @@
+# This should be run only in safe-mode.
+# Only for Windows 10 and 11.
+# More details: https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/security-malware-windows-defender-disableantispyware
+
+jobs:
+  - name: "Disable Windows Security"
+    description: "Disables Windows Defender real-time protection, logging, tasks, context menus, and services."
+    condition:
+      windows: [10, 11]
+    steps:
+      - name: "Tamper Protection"
+        registry:
+          entries:
+            - hive: HKLM
+              path: Software\Microsoft\Windows Defender\Features
+              add:
+                TamperProtection: { type: DWord, value: 0 }
+
+      - name: "Disable System Guard Runtime Monitor Broker"
+        registry:
+          entries:
+            - hive: HKLM
+              path: System\CurrentControlSet\Services\SgrmBroker
+              add:
+                Start: { type: DWord, value: 4 }
+
+      - name: "Disable Windows Defender Security Center"
+        registry:
+          entries:
+            - hive: HKLM
+              path: System\CurrentControlSet\Services\SecurityHealthService
+              add:
+                Start: { type: DWord, value: 4 }
+
+      - name: "Disable real-time protection"
+        registry:
+          entries:
+            - hive: HKLM
+              path: Software\Policies\Microsoft\Windows Defender
+              add:
+                DisableAntiVirus: { type: DWord, value: 1 }
+                DisableSpecialRunningModes: { type: DWord, value: 1 }
+                DisableRoutinelyTakingAction: { type: DWord, value: 1 }
+                ServiceKeepAlive: { type: DWord, value: 0 }
+                PUAProtection: { type: DWord, value: 0 }
+                DisableAntiSpyware: { type: DWord, value: 1 }
+                DisableRealtimeMonitoring: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: Software\Policies\Microsoft\Windows Defender\MpEngine
+              add:
+                MpEnablePus: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows Defender\Signature Updates
+              add:
+                ForceUpdateFromMU: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\Windows Defender\Policy Manager
+              add:
+                DisableScanningNetworkFiles: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: Software\Policies\Microsoft\Windows Defender\Real-Time Protection
+              add:
+                DisableBehaviorMonitoring: { type: DWord, value: 1 }
+                DisableIOAVProtection: { type: DWord, value: 1 }
+                DisableOnAccessProtection: { type: DWord, value: 1 }
+                DisableRealtimeMonitoring: { type: DWord, value: 1 }
+                DisableRoutinelyTakingAction: { type: DWord, value: 1 }
+                DisableScanOnRealtimeEnable: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\MRT
+              add:
+                DontReportInfectionInformation: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: Software\Policies\Microsoft\Windows Defender\Reporting
+              add:
+                DisableEnhancedNotifications: { type: DWord, value: 1 }
+            - hive: HKLM
+              path: Software\Policies\Microsoft\Windows Defender\SpyNet
+              add:
+                DisableBlockAtFirstSeen: { type: DWord, value: 1 }
+                SpynetReporting: { type: DWord, value: 0 }
+                SubmitSamplesConsent: { type: DWord, value: 2 }
+
+      - name: "Disable logging"
+        registry:
+          entries:
+            - hive: HKLM
+              path: System\CurrentControlSet\Control\WMI\Autologger\DefenderApiLogger
+              add:
+                Start: { type: DWord, value: 0 }
+            - hive: HKLM
+              path: System\CurrentControlSet\Control\WMI\Autologger\DefenderAuditLogger
+              add:
+                Start: { type: DWord, value: 0 }
+
+      - name: "Disable WD context menu"
+        registry:
+          entries:
+            - hive: HKCR
+              path: '*\shellex\ContextMenuHandlers'
+              delete:
+                keys:
+                - EPP
+            - hive: HKCR
+              path: 'Directory\shellex\ContextMenuHandlers'
+              delete:
+                keys:
+                - EPP
+            - hive: HKCR
+              path: 'Drive\shellex\ContextMenuHandlers'
+              delete:
+                keys:
+                - EPP
+
+      - name: "Disable WD services"
+        registry:
+          entries:
+            - hive: HKLM
+              path: System\CurrentControlSet\Services\WdFilter
+              add:
+                Start: { type: DWord, value: 4 }
+            - hive: HKLM
+              path: System\CurrentControlSet\Services\WdNisDrv
+              add:
+                Start: { type: DWord, value: 4 }
+            - hive: HKLM
+              path: System\CurrentControlSet\Services\WdNisSvc
+              add:
+                Start: { type: DWord, value: 4 }
+            - hive: HKLM
+              path: System\CurrentControlSet\Services\WinDefend
+              add:
+                Start: { type: DWord, value: 4 }
+
+      - name: "Disable WD systray icon"
+        registry:
+          entries:
+            - hive: HKLM
+              path: Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run
+              delete:
+                values:
+                - SecurityHealth
+                - WindowsDefender
+            - hive: HKLM
+              path: Software\Microsoft\Windows\CurrentVersion\Run
+              delete:
+                values:
+                - SecurityHealth
+                - WindowsDefender
+
+      - name: "Disable Defender tasks"
+        exec:
+          type: cmd
+          commands:
+          - 'schtasks /Change /TN "Microsoft\Windows\ExploitGuard\ExploitGuard MDM policy Refresh" /Disable'
+          - 'schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance" /Disable'
+          - 'schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Cleanup" /Disable'
+          - 'schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /Disable'
+          - 'schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Verification" /Disable'
+          

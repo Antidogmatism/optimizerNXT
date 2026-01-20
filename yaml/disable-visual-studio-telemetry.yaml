@@ -1,0 +1,58 @@
+jobs:
+  - name: "Disable Visual Studio Telemetry and Feedback"
+    description: "Disables telemetry, feedback dialogs, screenshot capture, and SQM for Visual Studio."
+    steps:
+      - name: "Visual Studio Registry Settings"
+        registry:
+          entries:
+            - hive: HKCU
+              path: Software\Microsoft\VisualStudio\Telemetry
+              add:
+                TurnOffSwitch: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\VisualStudio\Feedback
+              add:
+                DisableFeedbackDialog: { type: DWord, value: 1 }
+                DisableEmailInput: { type: DWord, value: 1 }
+                DisableScreenshotCapture: { type: DWord, value: 1 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\VisualStudio\SQM
+              add:
+                OptIn: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Policies\Microsoft\VisualStudio\Setup
+              add:
+                ConcurrentDownloads: { type: DWord, value: 2 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\VSCommon\14.0\SQM
+              add:
+                OptIn: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\VSCommon\15.0\SQM
+              add:
+                OptIn: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Microsoft\VSCommon\16.0\SQM
+              add:
+                OptIn: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Wow6432Node\Microsoft\VSCommon\14.0\SQM
+              add:
+                OptIn: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Wow6432Node\Microsoft\VSCommon\15.0\SQM
+              add:
+                OptIn: { type: DWord, value: 0 }
+
+            - hive: HKLM
+              path: SOFTWARE\Wow6432Node\Microsoft\VSCommon\16.0\SQM
+              add:
+                OptIn: { type: DWord, value: 0 }

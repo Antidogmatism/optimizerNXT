@@ -1,0 +1,61 @@
+jobs:
+  - name: "Disable AI services"
+    condition:
+      windows: [10, 11]
+    description: "Completely disables Cortana, CoPilot and other AI services."
+    steps:
+
+    - name: "Windows AI and Copilot Registry Settings"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Policies\Microsoft\Windows\WindowsAI
+            add:
+              DisableAIDataAnalysis: { type: DWord, value: 1 }
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\WindowsAI
+            add:
+              DisableAIDataAnalysis: { type: DWord, value: 1 }
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+            add:
+              ShowCopilotButton: { type: DWord, value: 0 }
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Edge
+            add:
+              DefaultBrowserSettingsCampaignEnabled: { type: DWord, value: 0 }
+              ComposeInlineEnabled: { type: DWord, value: 0 }
+          - hive: HKCU
+            path: SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot
+            add:
+              TurnOffWindowsCopilot: { type: DWord, value: 1 }
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot
+            add:
+              TurnOffWindowsCopilot: { type: DWord, value: 1 }
+
+    - name: "Disable Cortana, Web Search, and Search History"
+      registry:
+        entries:
+          - hive: HKCU
+            path: Software\Microsoft\Windows\CurrentVersion\SearchSettings
+            add:
+              IsDeviceSearchHistoryEnabled: { type: DWord, value: 0 }
+
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\Windows Search
+            add:
+              AllowCortana: { type: DWord, value: 0 }
+              DisableWebSearch: { type: DWord, value: 1 }
+              ConnectedSearchUseWeb: { type: DWord, value: 0 }
+              ConnectedSearchUseWebOverMeteredConnections: { type: DWord, value: 0 }
+              AllowCloudSearch: { type: DWord, value: 0 }
+
+          - hive: HKCU
+            path: SOFTWARE\Microsoft\Windows\CurrentVersion\Search
+            add:
+              HistoryViewEnabled: { type: DWord, value: 0 }
+              DeviceHistoryEnabled: { type: DWord, value: 0 }
+              AllowSearchToUseLocation: { type: DWord, value: 0 }
+              BingSearchEnabled: { type: DWord, value: 0 }
+              CortanaConsent: { type: DWord, value: 0 }

@@ -1,0 +1,31 @@
+jobs:
+  - name: "Add Take Ownership context menu"
+    description: "Adds 'Take Ownership' option to files and folders for administrators."
+    steps:
+      - name: "Files context menu"
+        registry:
+          entries:
+            - hive: HKCR
+              path: '*\shell\runas'
+              add:
+                "": { type: String, value: "Take Ownership" }
+                NoWorkingDirectory: { type: String, value: "" }
+            - hive: HKCR
+              path: '*\shell\runas\command'
+              add:
+                "": { type: String, value: 'cmd.exe /c takeown /f "%1" && icacls "%1" /grant administrators:F' }
+                IsolatedCommand: { type: String, value: 'cmd.exe /c takeown /f "%1" && icacls "%1" /grant administrators:F' }
+
+      - name: "Folders context menu"
+        registry:
+          entries:
+            - hive: HKCR
+              path: 'Directory\shell\runas'
+              add:
+                "": { type: String, value: "Take Ownership" }
+                NoWorkingDirectory: { type: String, value: "" }
+            - hive: HKCR
+              path: 'Directory\shell\runas\command'
+              add:
+                "": { type: String, value: 'cmd.exe /c takeown /f "%1" /r /d y && icacls "%1" /grant administrators:F /t' }
+                IsolatedCommand: { type: String, value: 'cmd.exe /c takeown /f "%1" /r /d y && icacls "%1" /grant administrators:F /t' }

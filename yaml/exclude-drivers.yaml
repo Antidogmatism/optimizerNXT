@@ -1,0 +1,34 @@
+jobs:
+- name: "Exclude Drivers from Windows Quality Updates"
+  description: "Prevent Windows Update from installing driver updates with quality updates"
+  condition:
+    windows: [10, 11]
+  steps:
+
+    - name: "Exclude drivers from Windows Updates"
+      registry:
+        entries:
+          - hive: HKLM
+            path: SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate
+            add:
+              ExcludeWUDriversInQualityUpdate: { type: DWord, value: 1 }
+
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\WindowsUpdate\UX\Settings
+            add:
+              ExcludeWUDriversInQualityUpdate: { type: DWord, value: 1 }
+
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\PolicyManager\default\Update\ExcludeWUDriversInQualityUpdate
+            add:
+              value: { type: DWord, value: 1 }
+
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\PolicyManager\default\Update
+            add:
+              ExcludeWUDriversInQualityUpdate: { type: DWord, value: 1 }
+
+          - hive: HKLM
+            path: SOFTWARE\Microsoft\PolicyManager\current\device\Update
+            add:
+              ExcludeWUDriversInQualityUpdate: { type: DWord, value: 1 }

@@ -1,0 +1,13 @@
+jobs:
+  - name: "Disable Modern Standby"
+    condition:
+      windows: [10, 11]
+    description: "Disables Modern Standby (S0 Low Power Idle) on Windows 10 and 11."
+    steps:
+      - name: "Set PlatformAoAcOverride to 0"
+        registry:
+          entries:
+            - hive: HKLM
+              path: SYSTEM\CurrentControlSet\Control\Power
+              add:
+                PlatformAoAcOverride: { type: DWord, value: 0 }
