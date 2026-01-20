@@ -32,15 +32,34 @@ jobs:
 
       - name: Create release description
         run: |
-          $sha256 = Get-FileHash "./optimizerNXT/bin/Release/optimizerNXT.exe" -Algorithm SHA256
+          $newVersion = "v0.0.3"
+          $changelogPath = "./CHANGELOG.md"
+          $exePath = "./optimizerNXT/bin/Release/optimizerNXT.exe"
           $bodyPath = "./release-body.md"
-          "SHA256: $($sha256.Hash)" | Out-File -Encoding UTF8 $bodyPath
+
+          $sha256 = Get-FileHash "$exePath" -Algorithm SHA256
+          $changelog = Get-Content $changelogPath -Raw
+
+          $pattern = "## \[$newVersion\].*?(\r?\n## |\z)"
+          $match = [regex]::Match($changelog, $pattern, [System.Text.RegularExpressions.RegexOptions]::Singleline)
+
+          if (-not $match.Success) {
+            Write-Host "⚠️ Changelog for version $newVersion not found"
+            exit 1
+          }
+
+          $section = $match.Value -replace "\r?\n## .*$", ""
+          $releaseBody = "SHA256: $($sha256.Hash)`r`n`r`n$section"
+          $releaseBody | Out-File -Encoding UTF8 $bodyPath
+          Write-Host "Release description created at $bodyPath"
 
 
       - name: Create release with tag
         uses: ncipollo/release-action@v1
         with:
-          tag: v0.0.2
-          name: Release v0.0.2
+          tag: v0.0.3
+          name: OptimizerNXT v0.0.3
+          allowUpdates: true
+          replacesArtifacts: true
           bodyFile: "./release-body.md"
           artifacts: "./optimizerNXT/bin/Release/optimizerNXT.exe"
