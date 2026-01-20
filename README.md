@@ -6,6 +6,12 @@ OptimizerNXT is a **powerful, YAML-driven CLI tool** for automating Windows twea
 
 <img src="https://raw.githubusercontent.com/hellzerg/optimizerNXT/refs/heads/main/images/banner.svg">
 
+<a href="https://github.com/hellzerg/OptimizerNXT/releases/latest/download/optimizerNXT.exe">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 60">
+    <text x="200" y="45" font-family="Consolas, monospace" font-size="48" fill="limegreen" text-anchor="middle" letter-spacing="4">DOWNLOAD</text>
+</svg>
+</a>
+
 ---
 
 ## 🌟 Summary
@@ -53,13 +59,15 @@ OptimizerNXT uses **YAML-driven configurations** with support for:
 - Sequenced tasks with dependencies  
 - Only YAML files **signed with the repo's PFX certificate** are executed. Unsigned or tampered files will be rejected. 
 
-> ⚠ **IMPORTANT:** Each YAML file must have a corresponding `.sig` file with the **same filename** in the same location.  
+> ⚠ **IMPORTANT:** Each YAML file must have a valid signature `.sig` file with the **same filename** in the same location.  
 
 ### Example Usage
 ```powershell
 # Run a specific YAML configuration
 optimizerNXT.exe apply "<yaml_file>"
+```
 
+```powershell
 # Run a folder containing many YAML files
 optimizerNXT.exe apply "<yaml_folder>"
 ```
