@@ -1,6 +1,4 @@
-## ⚡ OptimizerNXT
-
-### The finest Windows Optimizer CLI
+## ⚡ OptimizerNXT / The finest Windows Optimizer CLI
 
 <img src="https://raw.githubusercontent.com/hellzerg/optimizerNXT/refs/heads/main/images/banner.svg">
 
