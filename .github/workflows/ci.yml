@@ -1,7 +1,9 @@
 name: Build and release OptimizerNXT
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -32,34 +34,17 @@ jobs:
 
       - name: Create release description
         run: |
-          $newVersion = "v0.0.3"
-          $changelogPath = "./CHANGELOG.md"
-          $exePath = "./optimizerNXT/bin/Release/optimizerNXT.exe"
-          $bodyPath = "./release-body.md"
-
-          $sha256 = Get-FileHash "$exePath" -Algorithm SHA256
-          $changelog = Get-Content $changelogPath -Raw
-
-          $pattern = "## \[$newVersion\].*?(\r?\n## |\z)"
-          $match = [regex]::Match($changelog, $pattern, [System.Text.RegularExpressions.RegexOptions]::Singleline)
-
-          if (-not $match.Success) {
-            Write-Host "⚠️ Changelog for version $newVersion not found"
-            exit 1
-          }
-
-          $section = $match.Value -replace "\r?\n## .*$", ""
-          $releaseBody = "SHA256: $($sha256.Hash)`r`n`r`n$section"
-          $releaseBody | Out-File -Encoding UTF8 $bodyPath
-          Write-Host "Release description created at $bodyPath"
-
+          $sha256 = Get-FileHash "./optimizerNXT/bin/Release/optimizerNXT.exe" -Algorithm SHA256
+          $bodyPath = "./release-body.md" 
+          "SHA256: $($sha256.Hash)" | Out-File -Encoding UTF8 $bodyPath
 
       - name: Create release with tag
         uses: ncipollo/release-action@v1
         with:
-          tag: v0.0.3
-          name: OptimizerNXT v0.0.3
+          tag: ${{ github.ref_name }}
+          name: OptimizerNXT ${{ github.ref_name }}
           allowUpdates: true
           replacesArtifacts: true
-          bodyFile: "./release-body.md"
+          generateReleaseNotes: true
+          bodyFile: "./release-body.md" 
           artifacts: "./optimizerNXT/bin/Release/optimizerNXT.exe"
