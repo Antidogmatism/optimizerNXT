@@ -1,11 +1,2 @@
-## [0.0.3] - TBA
-- Hotfix test!!
-
-## [0.0.2] - TBA
-- Hotfix test!
-
-## [0.0.1] - TBA
-- Hotfix test
-
-## [0.0.0] - TBA
+## [v1.0.0] - 2026-Jan-26
 - Initial release

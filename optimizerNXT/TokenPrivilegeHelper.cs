@@ -4,7 +4,7 @@ using System.Security;
 
 namespace optimizerNXT {
     // Allows clients to obtain a Windows token privilege for a well-defined scope simply by "using" an instance of this class.
-    sealed class TokenPrivilegeHelper : IDisposable {
+    internal sealed class TokenPrivilegeHelper : IDisposable {
         private enum PrivilegeAction : uint {
             Disable = 0x0,
             Enable = 0x2

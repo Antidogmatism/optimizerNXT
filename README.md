@@ -34,13 +34,17 @@ OptimizerNXT empowers system administrators, IT professionals, and power users t
 
 ## 📥 Downloads
 
-> Downloads will be available soon.  
+Find the latest release of OptimizerNXT on the [Releases](https://github.com/hellzerg/optimizerNXT/releases) page.
 
 ---
 
-## 📚 Documentation
+## 📥 Changelog
 
-**YAML Syntax** – *coming soon*  
+Stay updated with the latest changes through the [Changelog](https://github.com/hellzerg/optimizerNXT/blob/main/CHANGELOG.md).
+
+---
+
+## 📚 Documentation 
 
 OptimizerNXT uses **YAML-driven configurations** with support for:  
 
@@ -65,12 +69,14 @@ All YAML packages in the Hub will be **cryptographically signed**, ensuring auth
 
 ---
 
-## 🔒 Security Policy
+## 🛡️ Security Policy
 
 - OptimizerNXT executes **locally only** and does **not collect user data**.  
 - All YAML configurations must be signed with repo's trusted **PFX certificate**.  
 - Unsigned or invalid YAML files are automatically rejected.  
 - Users are encouraged to test YAML packages in isolated environments first.  
+
+Learn about our security measures in the [Security Policy](https://github.com/hellzerg/optimizerNXT/blob/main/SECURITY.md).
 
 ---
 
@@ -84,12 +90,11 @@ All YAML packages in the Hub will be **cryptographically signed**, ensuring auth
 
 ## 📊 Details
 
-- Latest version: soon
-- Released: soon
-- SHA256: hash
+- Latest version: v1.0.0
+- Released: 2026-Jan-26
 
 ---
 
-## ☕ Buy me a delicious espresso
+## ❤️ Buy me a delicious espresso ☕
 
 If you find this tool useful, consider showing your support by [donating through PayPal](https://www.paypal.com/paypalme/supportoptimizer).
