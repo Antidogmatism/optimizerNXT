@@ -99,7 +99,7 @@ namespace optimizerNXT {
 
         private static RSA GetEmbeddedPublicKey()
         {
-            string resourceName = "optimizerΝΧΤ.Resources.pubkey.xml";
+            string resourceName = "optimizerNXT.Resources.pubkey.xml";
             var assembly = Assembly.GetExecutingAssembly();
             using (var stream = assembly.GetManifestResourceStream(resourceName))
             {
